@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">欢乐吧</string>
+    <string name="password">主人请输入您的key来打开传送门哦！</string>
+    <string name="add_url">new res</string>
+</resources>

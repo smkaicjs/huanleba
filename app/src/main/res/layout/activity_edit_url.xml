@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:padding="40dp"
+    android:background="@drawable/background23"
+    tools:context=".activity.Edit_url">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:singleLine="true"
+        android:paddingLeft="10dp"
+        android:background="@drawable/yuanjiao_6"
+        android:layout_marginTop="400dp"
+        android:textAllCaps="false"
+        android:id="@+id/edit_name"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingLeft="10dp"
+
+        android:textCursorDrawable="@color/cadetblue"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/yuanjiao3"
+        android:lines="1"
+        android:textAllCaps="false"
+        android:id="@+id/edit_url"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_commi"
+        android:text="save"
+        android:background="@drawable/yuanjiao4"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="right"/>
+
+</LinearLayout>

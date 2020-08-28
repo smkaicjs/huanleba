@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".activity.Edit_user_data">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="3"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="25sp"
+            android:id="@+id/user_data_for_history"/>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:singleLine="true"
+            android:paddingLeft="10dp"
+            android:background="@drawable/yuanjiao_6"
+            android:textAllCaps="false"
+            android:layout_marginTop="20dp"
+            android:id="@+id/edit_user_name"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:textCursorDrawable="@color/cadetblue"
+            android:layout_below="@id/edit_user_name"
+            android:background="@drawable/yuanjiao3"
+            android:singleLine="true"
+            android:textAllCaps="false"
+            android:id="@+id/edit_user_pass"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_del_user"
+            android:text="注销"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/edit_user_pass"
+            android:background="@drawable/yuanjiao4"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentLeft="true"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_commit"
+            android:text="save"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/edit_user_pass"
+            android:background="@drawable/yuanjiao4"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

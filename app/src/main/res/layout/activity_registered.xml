@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Zhucetheme"
+    android:background="@drawable/background17"
+    android:orientation="vertical"
+    tools:context=".activity.Registered">
+    <EditText
+        android:id="@+id/zhuce_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:textSize="25sp"
+        android:paddingLeft="10dp"
+        android:textAllCaps="false"
+        android:lines="1"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/yuanjiao1"
+
+        android:hint="name"/>
+    <EditText
+    android:id="@+id/zhuce_password1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="25sp"
+    android:hint="主人请输入密码哦"
+        android:paddingLeft="10dp"
+    android:textAllCaps="false"
+    android:inputType="textPassword"
+    android:lines="1"
+    android:background="@drawable/yuanjiao1"
+    android:layout_margin="20dp"/>
+    <EditText
+        android:id="@+id/zhuce_password2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
+        android:lines="1"
+        android:hint="主人再次输入密码哦"
+        android:textAllCaps="false"
+        android:background="@drawable/yuanjiao1"
+        android:layout_margin="20dp"/>
+    <EditText
+        android:id="@+id/invoit_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:inputType="text"
+        android:hint="主人请输入邀请码哦"
+        android:paddingLeft="10dp"
+        android:textAllCaps="false"
+        android:background="@drawable/yuanjiao1"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="20dp"
+
+        />
+    <Button
+        android:id="@+id/zhece_btn"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:background="@drawable/background19"
+        android:text="注册"
+        android:layout_marginTop="100dp"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        />
+
+
+
+</LinearLayout>

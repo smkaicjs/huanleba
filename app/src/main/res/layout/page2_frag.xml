@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/baozang_2">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/biankuang2"
+        android:alpha="0.5"
+        android:shadowRadius="50"
+        android:text="巨龙的宝藏"
+        android:gravity="center"
+        android:textSize="30sp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:id="@+id/goldon_respo"
+        app:fastScrollEnabled="true"
+        app:fastScrollVerticalThumbDrawable="@drawable/thumb_draw"
+        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_draw"
+        app:fastScrollHorizontalTrackDrawable="@drawable/line_draw"
+        app:fastScrollVerticalTrackDrawable="@drawable/line_draw"/>
+
+</LinearLayout>
