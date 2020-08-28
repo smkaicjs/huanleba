@@ -12,6 +12,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -19,7 +20,9 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +55,8 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
     private Mess_page_frag messPageFrag;
 
     private FrameLayout frameLayout;
+    private ActionBar user3;
+    private WebView mwebview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +73,8 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
         btn3.setOnClickListener(this);
 
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(R.layout.user_custom3);
 
-        actionBar.setDisplayShowCustomEnabled(true);
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(User_firstpage.this, new String[]{Manifest.permission.INTERNET,
                     Manifest.permission.READ_CONTACTS}, 1);
@@ -79,9 +82,38 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
 //        http://403.workarea3.live/index.php
         String url_last = getSharedPreferences("LASTURL",MODE_PRIVATE).getString("URL","https:www.baidu.com");
         First_page_frag pageFrag = new First_page_frag(url_last);
-        FragmentTransaction transaction = manager.beginTransaction();
+        final FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.frame_page, pageFrag);
         transaction.commit();
+        user3 = getSupportActionBar();
+        View user3_view = LayoutInflater.from(Mycontext.getcontext()).inflate(R.layout.user_custom3,null);
+        ImageView sousuo = user3_view.findViewById(R.id.load_load_url);
+        final EditText sousuourl = user3_view.findViewById(R.id.edit_load_url);
+        sousuo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()){
+//                    case R.id.back_home:
+//                        First_page_frag frags = new First_page_frag("https://www.baidu.com");
+//
+//                        FragmentTransaction transaction21 = manager.beginTransaction();
+//                        transaction21.replace(R.id.frame_page, frags);
+//                        transaction21.addToBackStack(null);
+//                        transaction21.commit();
+//                        break;
+                    case R.id.load_load_url:
+                        String url = sousuourl.getText().toString();
+                        First_page_frag first_page_frag = new First_page_frag(url);
+                        FragmentTransaction transaction1 = manager.beginTransaction();
+                        transaction1.replace(R.id.frame_page,first_page_frag);
+                        transaction1.commit();
+                        break;
+
+                }
+            }
+        });
+        user3.setCustomView(user3_view);
+        user3.setDisplayShowCustomEnabled(true);
 
 
         //
@@ -131,7 +163,35 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
                 ActionBar actionBars = getSupportActionBar();
 
 
-                actionBars.setCustomView(R.layout.user_custom3);
+
+                View user3_views = LayoutInflater.from(Mycontext.getcontext()).inflate(R.layout.user_custom3,null);
+
+                ImageView sousuo = user3_views.findViewById(R.id.load_load_url);
+                final EditText sousuourl = user3_views.findViewById(R.id.edit_load_url);
+                sousuo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()){
+//                    case R.id.back_home:
+//                        First_page_frag frags = new First_page_frag("https://www.baidu.com");
+//
+//                        FragmentTransaction transaction21 = manager.beginTransaction();
+//                        transaction21.replace(R.id.frame_page, frags);
+//                        transaction21.addToBackStack(null);
+//                        transaction21.commit();
+//                        break;
+                            case R.id.load_load_url:
+                                String url = sousuourl.getText().toString();
+                                First_page_frag first_page_frag = new First_page_frag(url);
+                                FragmentTransaction transaction1 = manager.beginTransaction();
+                                transaction1.replace(R.id.frame_page,first_page_frag);
+                                transaction1.commit();
+                                break;
+
+                        }
+                    }
+                });
+                user3.setCustomView(user3_views);
                 actionBars.setDisplayShowCustomEnabled(true);
 
 
@@ -180,6 +240,7 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
                 actionBar4.setDisplayShowCustomEnabled(true);
 
                 break;
+
         }
 
     }
@@ -222,6 +283,9 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
         }
 
     }
+
+
+
     private boolean sql_data(Url_sheet url_sheet){
         List<Url_sheet> url_sheets = LitePal.findAll(Url_sheet.class);
         for (Url_sheet url:url_sheets){
@@ -231,6 +295,7 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
         }
 
         return true;
+
     }
 
 

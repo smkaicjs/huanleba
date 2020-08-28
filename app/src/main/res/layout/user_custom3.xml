@@ -3,8 +3,42 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/edit_load_url"
+                    android:layout_width="320dp"
+                    android:layout_height="50dp"
+                    android:hint="搜索栏"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:background="@drawable/yuanjiao_6"
+                    android:paddingLeft="20dp"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/load_load_url"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/sousuo"
+                    android:layout_alignRight="@id/edit_load_url"
+                    />
+            </RelativeLayout>
+        </FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="back home"
+            android:id="@+id/back_home"
+            android:visibility="gone"
+            android:textColor="@color/lavender"/>
 
 
         <TextView
@@ -15,6 +49,7 @@
             android:textColor="@color/cyan"
             android:layout_centerHorizontal="true"
             android:textSize="20sp"
+            android:visibility="gone"
             android:id="@+id/theme_firstpage"/>
     </RelativeLayout>
 

@@ -10,12 +10,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +27,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.office.R;
 import com.example.office.mcontext.Mycontext;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class First_page_frag extends Fragment implements View.OnClickListener{
     private WebView webView;
@@ -55,6 +60,13 @@ public class First_page_frag extends Fragment implements View.OnClickListener{
         Button go_to = view.findViewById(R.id.go_to);
         go_to.setBackgroundColor(getResources().getColor(R.color.palevioletred));
         go_back.setBackgroundColor(getResources().getColor(R.color.saddlebrown));
+
+//        WindowManager windowManager = (WindowManager) Mycontext.getcontext().getSystemService(Context.WINDOW_SERVICE);
+//        windowManager.addView(LayoutInflater.from(Mycontext.getcontext()).inflate(R.layout.loadurl,null), new WindowManager.LayoutParams(
+//                MATCH_PARENT,MATCH_PARENT
+//        ));
+
+
         go_back.setAlpha(0.3F);
         go_to.setAlpha(0.3F);
         go_back.setOnClickListener(this);
@@ -62,7 +74,7 @@ public class First_page_frag extends Fragment implements View.OnClickListener{
         return view;
     }
     public WebView getWebView(){return webView;}
-    private void seturl (String url){
+    private void seturl (final String url){
         webView.setWebChromeClient(mywebchromeclict);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
@@ -73,6 +85,7 @@ public class First_page_frag extends Fragment implements View.OnClickListener{
 
             }
         });
+
     }
 
     @Override
