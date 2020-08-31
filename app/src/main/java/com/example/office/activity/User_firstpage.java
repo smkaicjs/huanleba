@@ -55,6 +55,7 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
     private Mess_page_frag messPageFrag;
 
     private FrameLayout frameLayout;
+    private int now_at = 1;
     private ActionBar user3;
     private WebView mwebview;
 
@@ -150,28 +151,31 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.page_1:
-                btn1.setBackgroundColor(getResources().getColor(R.color.darkkhaki));
-                btn2.setBackgroundColor(getResources().getColor(R.color.darkslateblue));
-                btn3.setBackgroundColor(getResources().getColor(R.color.darkslateblue));
-                String laturl = getSharedPreferences("LASTURL",MODE_PRIVATE).getString("URL","https://www.baidu.com");
-                First_page_frag frag = new First_page_frag(laturl);
-
-                FragmentTransaction transaction2 = manager.beginTransaction();
-                transaction2.replace(R.id.frame_page, frag);
-                transaction2.addToBackStack(null);
-                transaction2.commit();
-                ActionBar actionBars = getSupportActionBar();
+                if (now_at != 1){
+                    btn1.setBackgroundColor(getResources().getColor(R.color.darkkhaki));
+                    btn2.setBackgroundColor(getResources().getColor(R.color.darkslateblue));
+                    btn3.setBackgroundColor(getResources().getColor(R.color.darkslateblue));
+                    String laturl = getSharedPreferences("LASTURL",MODE_PRIVATE).getString("URL","https://www.baidu.com");
+                    First_page_frag frag = new First_page_frag(laturl);
 
 
+                    FragmentTransaction transaction2 = manager.beginTransaction();
+                    transaction2.replace(R.id.frame_page, frag);
+                    transaction2.addToBackStack(null);
+                    transaction2.commit();
+                    now_at = 1;
+                    ActionBar actionBars = getSupportActionBar();
 
-                View user3_views = LayoutInflater.from(Mycontext.getcontext()).inflate(R.layout.user_custom3,null);
 
-                ImageView sousuo = user3_views.findViewById(R.id.load_load_url);
-                final EditText sousuourl = user3_views.findViewById(R.id.edit_load_url);
-                sousuo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        switch (view.getId()){
+
+                    View user3_views = LayoutInflater.from(Mycontext.getcontext()).inflate(R.layout.user_custom3,null);
+
+                    ImageView sousuo = user3_views.findViewById(R.id.load_load_url);
+                    final EditText sousuourl = user3_views.findViewById(R.id.edit_load_url);
+                    sousuo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            switch (view.getId()){
 //                    case R.id.back_home:
 //                        First_page_frag frags = new First_page_frag("https://www.baidu.com");
 //
@@ -180,22 +184,25 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
 //                        transaction21.addToBackStack(null);
 //                        transaction21.commit();
 //                        break;
-                            case R.id.load_load_url:
-                                String url = sousuourl.getText().toString();
-                                First_page_frag first_page_frag = new First_page_frag(url);
-                                FragmentTransaction transaction1 = manager.beginTransaction();
-                                transaction1.replace(R.id.frame_page,first_page_frag);
-                                transaction1.commit();
-                                break;
+                                case R.id.load_load_url:
+                                    String url = sousuourl.getText().toString();
+                                    First_page_frag first_page_frag = new First_page_frag(url);
+                                    FragmentTransaction transaction1 = manager.beginTransaction();
+                                    transaction1.replace(R.id.frame_page,first_page_frag);
+                                    transaction1.commit();
+                                    break;
 
+                            }
                         }
-                    }
-                });
-                user3.setCustomView(user3_views);
-                actionBars.setDisplayShowCustomEnabled(true);
+                    });
+                    user3.setCustomView(user3_views);
+                    actionBars.setDisplayShowCustomEnabled(true);
 
 
+                    break;
+                }
                 break;
+
 
             case R.id.page_2:
                 btn2.setBackgroundColor(getResources().getColor(R.color.darkkhaki));
@@ -224,6 +231,7 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
 //                Log.d(TAG, location.toString());
                 ActionBar actionBar1 = getSupportActionBar();
                 actionBar1.setCustomView(R.layout.user_custom2);
+                now_at = 2;
                 break;
             case R.id.page_3:
                 btn3.setBackgroundColor(getResources().getColor(R.color.darkkhaki));
@@ -238,7 +246,7 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
                 ActionBar actionBar4 = getSupportActionBar();
                 actionBar4.setCustomView(R.layout.user_custom);
                 actionBar4.setDisplayShowCustomEnabled(true);
-
+                now_at = 3;
                 break;
 
         }
