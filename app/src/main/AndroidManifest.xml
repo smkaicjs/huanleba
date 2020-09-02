@@ -3,7 +3,10 @@
     package="com.example.office">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".mcontext.Mycontext"
@@ -15,8 +18,20 @@
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/Zhucetheme"
+        android:requestLegacyExternalStorage = "true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.zoomActivity"></activity>
+
+
+
+        <service
+            android:name=".service.MyIntentService"
+            android:exported="false"></service>
+        <service
+            android:name=".service.DownloadServices"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".activity.zoomActivity" />
         <activity android:name=".activity.User_list" />
 
         <service

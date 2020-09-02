@@ -1,39 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:theme="@style/Theme.AppCompat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/web_1">
+    android:id="@+id/web_1"
+    tools:ignore="NamespaceTypo">
     <RelativeLayout
         android:id="@+id/rela_web"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
-        <WebView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
+            >
+        <com.example.office.activity.mywebview
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/web_view"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
         <Button
             android:layout_width="50dp"
             android:layout_height="100dp"
             android:id="@+id/go_back"
             android:layout_marginBottom="200dp"
-            android:layout_alignBottom="@+id/web_view"/>
+            android:layout_alignBottom="@+id/swipe_refresh"/>
 
         <Button
             android:layout_width="50dp"
             android:layout_height="100dp"
             android:layout_marginBottom="200dp"
-            android:layout_alignBottom="@+id/web_view"
-            android:layout_alignRight="@+id/web_view"
+            android:layout_alignBottom="@+id/swipe_refresh"
+            android:layout_alignRight="@+id/swipe_refresh"
             android:id="@+id/go_to"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/frame_page_my"/>
+            android:id="@+id/frame_page_my">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:id="@+id/refresh_button"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sousuo"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="60dp"
+            /></FrameLayout>
+
+
+
+
     </RelativeLayout>
+
 
 
 </LinearLayout>

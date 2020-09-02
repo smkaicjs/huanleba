@@ -69,6 +69,9 @@ public class Mess_page_frag extends Fragment {
                 transaction1.addToBackStack(null);
                 transaction1.commit();
                 AppCompatActivity activity = (AppCompatActivity) getActivity();
+                ActionBar bar = activity.getSupportActionBar();
+                bar.setCustomView(R.layout.user_custom3);
+                bar.setDisplayShowCustomEnabled(true);
                 Button btn1 = activity.findViewById(R.id.page_1);
                 Button btn2 = activity.findViewById(R.id.page_2);
                 Button btn3 = activity.findViewById(R.id.page_3);

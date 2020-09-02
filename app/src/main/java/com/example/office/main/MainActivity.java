@@ -3,6 +3,7 @@ package com.example.office.main;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.BoringLayout;
@@ -51,6 +52,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         zhuce.setOnClickListener(this);
         //
         createadmin_user();
+        long now_time = System.currentTimeMillis();
+        long last_time = sharefiledata("TUI","DESTORY",0,0L,false);
+        long res_time = now_time-last_time;
+
+        if (res_time<259200000){
+            Intent intent = new Intent(this,User_firstpage.class);
+            startActivity(intent);
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -160,6 +170,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        long destime = System.currentTimeMillis();
+        sharefiledata("TUI","DESTORY",destime,0L,true);
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -183,6 +200,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             Exitapp.removeallactivity();
         }
 
+    }
+    private long sharefiledata(String filename,String key,long vaulus,long defaultva,boolean change){
+        if (change){
+            SharedPreferences.Editor editor = getSharedPreferences(filename,MODE_PRIVATE).edit();
+            editor.putLong(key,vaulus);
+            editor.commit();
+            return 0L;
+        }
+        return getSharedPreferences(filename,MODE_PRIVATE).getLong(key,defaultva);
     }
 
 

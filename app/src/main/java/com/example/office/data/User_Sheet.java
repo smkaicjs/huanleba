@@ -6,7 +6,15 @@ public class User_Sheet extends LitePalSupport {
     private String name,password;
     private int id;
     private long date;
+    private long destime;
 
+    public long getDestime() {
+        return destime;
+    }
+
+    public void setDestime(long destime) {
+        this.destime = destime;
+    }
 
     public long getDate() {
         return date;

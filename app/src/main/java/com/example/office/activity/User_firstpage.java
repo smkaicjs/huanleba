@@ -3,11 +3,15 @@ package com.example.office.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -36,12 +40,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.office.R;
 import com.example.office.data.Url_sheet;
+import com.example.office.data.User_Sheet;
 import com.example.office.frag.First_page_frag;
 import com.example.office.frag.Myhome_page_frag;
 import com.example.office.frag.Mess_page_frag;
 import com.example.office.main.BaseActivity;
 import com.example.office.main.Exitapp;
 import com.example.office.mcontext.Mycontext;
+import com.example.office.service.DownloadServices;
 
 import org.litepal.LitePal;
 
@@ -58,6 +64,19 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
     private int now_at = 1;
     private ActionBar user3;
     private WebView mwebview;
+    private DownloadServices.binder mbinder;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            mbinder = (DownloadServices.binder) iBinder;
+            Log.d("首页服务绑定成功", "onServiceConnected: 下载服务");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +91,37 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
         btn3.setOnClickListener(this);
+        Intent intent = new Intent(this,DownloadServices.class);
+        startService(intent);
+        bindService(intent,connection,BIND_AUTO_CREATE);
 
 
 
+        String state = Environment.getExternalStorageState();
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(User_firstpage.this, new String[]{Manifest.permission.INTERNET,
-                    Manifest.permission.READ_CONTACTS}, 1);
+                    }, 1);
         }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(User_firstpage.this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(User_firstpage.this, new String[]{
+                    Manifest.permission.READ_CONTACTS
+                    }, 3);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.FOREGROUND_SERVICE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(User_firstpage.this, new String[]{
+
+                    Manifest.permission.FOREGROUND_SERVICE}, 4);
+        }
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            Toast.makeText(this,"外部存储可用",Toast.LENGTH_SHORT).show();
+        }
+
 //        http://403.workarea3.live/index.php
         String url_last = getSharedPreferences("LASTURL",MODE_PRIVATE).getString("URL","https:www.baidu.com");
         First_page_frag pageFrag = new First_page_frag(url_last);
@@ -108,6 +150,7 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
                         FragmentTransaction transaction1 = manager.beginTransaction();
                         transaction1.replace(R.id.frame_page,first_page_frag);
                         transaction1.commit();
+//                        downloadres(url);
                         break;
 
                 }
@@ -186,7 +229,7 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
 //                        break;
                                 case R.id.load_load_url:
                                     String url = sousuourl.getText().toString();
-                                    First_page_frag first_page_frag = new First_page_frag(url);
+                                    First_page_frag first_page_frag = new First_page_frag("https://www.baidu.com");
                                     FragmentTransaction transaction1 = manager.beginTransaction();
                                     transaction1.replace(R.id.frame_page,first_page_frag);
                                     transaction1.commit();
@@ -254,11 +297,18 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(connection);
+
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case 1:
                 if (grantResults.length>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(this,"你做了一个明智的决定",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this,"你做了一个明智的决定",Toast.LENGTH_SHORT).show();
 
                 }else{
                     Toast.makeText(this,"你将不能使用此功能",Toast.LENGTH_SHORT).show();
@@ -304,6 +354,9 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
 
         return true;
 
+    }
+    public void downloadres(String url){
+        mbinder.startdownload(url);
     }
 
 
