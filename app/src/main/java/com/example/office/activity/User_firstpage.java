@@ -3,6 +3,7 @@ package com.example.office.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -330,9 +331,10 @@ public class User_firstpage extends BaseActivity implements View.OnClickListener
     private void exit() {
 
         if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(this, "再次点击退出应用", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "再次点击退出应用", Toast.LENGTH_SHORT).show();
 
             exitTime = System.currentTimeMillis();
+
         } else {
 
 //            Intent intent = new Intent();

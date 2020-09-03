@@ -111,7 +111,7 @@ public class DownloadServices extends Service {
         notification.setContentIntent(pi);
         notification.setSmallIcon(R.mipmap.ic_launcher);
         notification.setContentTitle("downloading");
-        if (process>=0){
+        if (process > 0){
             notification.setContentText(process+"%");
             notification.setProgress(100,process,false);
         }

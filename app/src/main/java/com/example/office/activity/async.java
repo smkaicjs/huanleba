@@ -94,7 +94,7 @@ public class async extends AsyncTask<String, Integer, Integer> {
                 }else {
                     total += len;
                     savefile.write(bytes,0,len);
-                    int pro = (int) ((filelength+total)/contentlength)*100;
+                    int pro = (int) ((filelength+total)*100/contentlength);
                     publishProgress(pro);
                 }
             }

@@ -18,6 +18,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -63,6 +65,8 @@ public class First_page_frag extends Fragment implements View.OnClickListener{
     private FragmentActivity activity;
     public static final int LOADWEB = 1;
     public static final int RELOAD = 2;
+    public static final int REFRESH = 3;
+    public static final int BACK = 4;
     private Handler mhhandler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -75,7 +79,28 @@ public class First_page_frag extends Fragment implements View.OnClickListener{
                     Log.d(TAG, "handleMessage: 到了reload");
 //                    webView.reload();
                     webView.requestFocus();
-                    refreshLayout.setRefreshing(false);
+//                    refreshLayout.setRefreshing(false);
+                    break;
+                case REFRESH:
+                    String title = webView.getTitle();
+                    if (!title.equals("百度一下")){
+                        webView.loadUrl(webView.copyBackForwardList().getCurrentItem().getUrl());
+
+//                    webView.reload();
+                        webView.requestFocus();
+                        break;
+                    }
+                    mhhandler.removeMessages(REFRESH);
+                    mhhandler.sendMessageDelayed(mhhandler.obtainMessage(REFRESH),1000);
+
+
+                    break;
+                case BACK:
+                    if (webView.canGoBack()){
+
+                        webView.goBack();
+                    }else {
+                        webView.loadUrl("https://www.baidu.com");}
                     break;
                 default:
                     break;
@@ -106,6 +131,7 @@ public class First_page_frag extends Fragment implements View.OnClickListener{
 
     private Intent intent;
     private int startx,endx;
+    private long tartime = 1500000000;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
@@ -121,34 +147,31 @@ public class First_page_frag extends Fragment implements View.OnClickListener{
 
 
 
-        refreshLayout = view.findViewById(R.id.swipe_refresh);
-        refreshLayout.setColorSchemeResources(R.color.color1);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-           @Override
-           public void onRefresh() {
-               mhhandler.sendMessage(mhhandler.obtainMessage(RELOAD));
-           }
+//        refreshLayout = view.findViewById(R.id.swipe_refresh);
+//        refreshLayout.setColorSchemeResources(R.color.color1);
+//        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//           @Override
+//           public void onRefresh() {
+//               mhhandler.sendMessage(mhhandler.obtainMessage(RELOAD));
+//           }
+//
+//        });
 
-        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                webView.loadUrl(webView.copyBackForwardList().getCurrentItem().getUrl());
-            }
-        });
-        webView.setOnScrollListener(new mywebview.IScrollListener() {
-            @Override
-            public void onScrollChanged(int scrollY) {
-                if (scrollY == 0) {
-                    //开启下拉刷新
-                    refreshLayout.setEnabled(true);
-                } else {
-                    //关闭下拉刷新
-                    refreshLayout.setEnabled(false);
+                if (System.currentTimeMillis() - tartime > 1000){
+                    mhhandler.sendMessageDelayed(mhhandler.obtainMessage(REFRESH),1000);
+                    tartime = System.currentTimeMillis();
+                }else {
+                    mhhandler.removeMessages(REFRESH);
+                    mhhandler.sendMessage(mhhandler.obtainMessage(BACK));
+                    tartime = System.currentTimeMillis();
                 }
+
+
             }
         });
-
 
 
 //        view.setOnTouchListener(new View.OnTouchListener() {
@@ -206,10 +229,33 @@ public class First_page_frag extends Fragment implements View.OnClickListener{
         go_to.setOnClickListener(this);
         return view;
     }
+
     public WebView getWebView(){return webView;}
 
+    private long lastexittime,down_time,up_time;
     private void seturl (final String url){
         webView.setWebChromeClient(mywebchromeclict);
+
+        webView.setOnScrollListener(new mywebview.IScrollListener() {
+            @Override
+            public void onScrollChanged(int scrollY) {
+                if (scrollY == 0) {
+                    if (webView.getScrollY()==0){
+                        //开启下拉刷新
+//                        refreshLayout.setEnabled(false);
+                    }
+
+                } else {
+                    //关闭下拉刷新
+//                    refreshLayout.setEnabled(false);
+                }
+            }
+        });
+        webView.getSettings().setMediaPlaybackRequiresUserGesture(true);
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        webView.getSettings().setDomStorageEnabled(true);
+//        webView.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36");
+
         webView.getSettings().setJavaScriptEnabled(true);
 //        webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
@@ -223,6 +269,27 @@ public class First_page_frag extends Fragment implements View.OnClickListener{
 //                mbinder.startdownload(s);
                 act.downloadres(s);
 
+            }
+        });
+
+        webView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+                if (KeyEvent.KEYCODE_BACK == keyEvent.getKeyCode()){
+                    if (keyEvent.getAction()==KeyEvent.ACTION_DOWN){
+                        down_time = System.currentTimeMillis();
+                    }
+                    if (KeyEvent.ACTION_UP == keyEvent.getAction()){
+                        up_time = System.currentTimeMillis();
+                    }
+                    if (up_time - down_time > 1000&& webView.canGoBack()){
+                        webView.goBack();
+                        return false;
+                    }
+
+                }
+                return false;
             }
         });
 
@@ -308,11 +375,11 @@ public class First_page_frag extends Fragment implements View.OnClickListener{
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             if (newProgress < 100) {
-                refreshLayout.setRefreshing(true);
+//                refreshLayout.setRefreshing(false);
                 Log.d(TAG, "handleMessage: 到了if");
             } else {
                 Log.d(TAG, "handleMessage: 到了else");
-                refreshLayout.setRefreshing(false);
+//                refreshLayout.setRefreshing(false);
             }
             super.onProgressChanged(view, newProgress);
         }
